@@ -1,4 +1,4 @@
-# Jellybase (クラゲ大百科 自動登録システム)
+# Jellybase (生物種マスター 自動登録システム)
 
 **Jellybase** は、Google Apps Script (GAS) と Notion API を連携させ、海洋生物（特にクラゲ）の情報を学術データベースから自動でスクレイピング・整理し、Notion上のデータベースへ図鑑データとして登録する自動化ツールです。
 
