@@ -25,7 +25,7 @@
 2. 開発環境に [`clasp`](https://github.com/google/clasp) がインストールされていない場合は、npm経由でインストール・ログインします（`npm i -g @google/clasp` / `clasp login`）。
 3. GASプロジェクトを作成し、紐づけるためにローカルで以下を実行します。
    ```bash
-   clasp create --type webapp
+   clasp create --type standalone
    # または既存のGASのスクリプトIDがある場合は
    clasp setting scriptId [独自のGASプロジェクトID]
    ```
@@ -41,3 +41,7 @@
 
 ## ライセンス・注意事項
 当システムは無保証で自由に改変利用可能ですが、対象ウェブサイトのスクレイピング規約やAPI利用制限（WoRMS REST/Webサービス等）に配慮・留意の上でご利用ください。
+
+## 開発について
+本システムのコード構築および設計にあたっては、AIアシスタント（Google Gemini および Antigravity）を活用しています。
+なお、AIによって生成されたコード群はすべて、開発者自身による動作テスト、仕様確認、およびレビューチェックを経た上で採用・構成されています。
