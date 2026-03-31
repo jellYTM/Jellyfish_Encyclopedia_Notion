@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <title>クラゲ大百科 自動登録システム</title>
+  <style>
+    /* Premium Glassmorphism UI with vibrant aquatic colors */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Noto+Sans+JP:wght@300;400;700&display=swap');
+
+    :root {
+      --primary: #00f2fe;
+      --secondary: #4facfe;
+      --accent: #d2c2ff;
+      --bg-dark: #0b1329;
+      --glass-bg: rgba(255, 255, 255, 0.04);
+      --glass-border: rgba(255, 255, 255, 0.1);
+      --text: #e0f2fe;
+      --text-muted: #94a3b8;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', 'Noto Sans JP', sans-serif;
+      background: radial-gradient(circle at top right, #112854, #0f1c3f, var(--bg-dark));
+      color: var(--text);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Animated background elements (jellyfish/bubbles aesthetics) */
+    .bubble {
+      position: absolute;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.02));
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
+      animation: float 15s infinite ease-in-out;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      pointer-events: none;
+    }
+
+    @keyframes float {
+
+      0%,
+      100% {
+        transform: translateY(0) scale(1);
+        opacity: 0.4;
+      }
+
+      50% {
+        transform: translateY(-80px) scale(1.05);
+        opacity: 0.7;
+      }
+    }
+
+    .container {
+      background: var(--glass-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--glass-border);
+      border-radius: 24px;
+      padding: 3.5rem 3rem;
+      width: 100%;
+      max-width: 460px;
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      position: relative;
+      z-index: 10;
+      transform: translateY(20px);
+      animation: slideUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+      opacity: 0;
+      box-sizing: border-box;
+    }
+
+    @keyframes slideUp {
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    h1 {
+      margin-top: 0;
+      font-size: 2.2rem;
+      font-weight: 600;
+      text-align: center;
+      background: linear-gradient(to right, var(--primary), var(--secondary), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.02em;
+    }
+
+    p.subtitle {
+      text-align: center;
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-bottom: 2.5rem;
+      line-height: 1.5;
+    }
+
+    .form-group {
+      margin-bottom: 2rem;
+      position: relative;
+    }
+
+    label {
+      display: block;
+      font-size: 0.85rem;
+      margin-bottom: 0.6rem;
+      color: #bae6fd;
+      font-weight: 400;
+      letter-spacing: 0.03em;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 1.1rem 1.2rem;
+      background: rgba(0, 0, 0, 0.25);
+      border: 1px solid var(--glass-border);
+      border-radius: 12px;
+      color: white;
+      font-size: 1rem;
+      box-sizing: border-box;
+      transition: all 0.3s ease;
+      font-family: inherit;
+    }
+
+    input[type="text"]:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(0, 242, 254, 0.15);
+      background: rgba(0, 0, 0, 0.4);
+    }
+
+    input[type="text"]::placeholder {
+      color: #475569;
+    }
+
+    button {
+      width: 100%;
+      padding: 1.1rem;
+      background: linear-gradient(135deg, var(--secondary), var(--primary));
+      border: none;
+      border-radius: 12px;
+      color: #041020;
+      font-size: 1.05rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0, 242, 254, 0.2);
+    }
+
+    button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transform: skewX(-25deg);
+      transition: all 0.7s ease;
+    }
+
+    button:hover::before {
+      left: 150%;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(0, 242, 254, 0.35);
+    }
+
+    button:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 10px rgba(0, 242, 254, 0.2);
+    }
+
+    button:disabled {
+      background: #1e293b;
+      color: #64748b;
+      cursor: not-allowed;
+      box-shadow: none;
+      transform: none;
+    }
+
+    button:disabled::before {
+      display: none;
+    }
+
+    /* Loading Spinner */
+    .spinner-container {
+      display: none;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      align-items: center;
+      gap: 10px;
+    }
+
+    .spinner {
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      border-top-color: #fff;
+      animation: spin 1s linear infinite;
+    }
+
+    .spinner-text {
+      color: #fff;
+      font-size: 0.95rem;
+      font-weight: 400;
+    }
+
+    button.loading {
+      color: transparent;
+    }
+
+    button.loading .spinner-container {
+      display: flex;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    #message {
+      margin-top: 1.5rem;
+      padding: 1.2rem;
+      border-radius: 12px;
+      text-align: center;
+      font-size: 0.95rem;
+      opacity: 0;
+      transform: translateY(-10px);
+      transition: all 0.4s ease;
+      display: none;
+      line-height: 1.5;
+    }
+
+    #message.show {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .success {
+      background: rgba(16, 185, 129, 0.1);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.2);
+    }
+
+    .error {
+      background: rgba(239, 68, 68, 0.1);
+      color: #f87171;
+      border: 1px solid rgba(239, 68, 68, 0.2);
+    }
+
+    a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.2s ease;
+      display: inline-block;
+      margin-top: 0.5rem;
+    }
+
+    a:hover {
+      text-decoration: underline;
+      color: #fff;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="bubble" style="width: 180px; height: 180px; left: 8%; top: 15%; animation-duration: 18s;"></div>
+  <div class="bubble"
+    style="width: 90px; height: 90px; right: 15%; top: 10%; animation-duration: 12s; animation-delay: 2s;"></div>
+  <div class="bubble"
+    style="width: 250px; height: 250px; right: -5%; bottom: -5%; animation-duration: 25s; animation-delay: 1s;"></div>
+  <div class="bubble"
+    style="width: 70px; height: 70px; left: 22%; bottom: 18%; animation-duration: 14s; animation-delay: 5s;"></div>
+
+  <div class="container">
+    <h1>Jellybase</h1>
+    <p class="subtitle">学術データベースから情報をスクレイピングし、<br>Notionへ図鑑データを自動登録します</p>
+
+    <div class="form-group">
+      <label for="species">登録したい和名・学名、または黒潮図鑑のURLを入力</label>
+      <input type="text" id="species" placeholder="例: ミズクラゲ / Aurelia aurita / https://..." autocomplete="off">
+    </div>
+
+    <button id="submitBtn" onclick="submitForm()">
+      解析・登録を実行
+      <div class="spinner-container">
+        <div class="spinner"></div><span class="spinner-text">実行中...</span>
+      </div>
+    </button>
+
+    <div id="message"></div>
+  </div>
+
+  <script>
+    function submitForm() {
+      const speciesInput = document.getElementById('species');
+      const submitBtn = document.getElementById('submitBtn');
+      const messageDiv = document.getElementById('message');
+
+      const speciesName = speciesInput.value.trim();
+
+      if (!speciesName) {
+        showMessage('種名を入力してください。', 'error');
+        return;
+      }
+
+      // Loading state
+      submitBtn.classList.add('loading');
+      submitBtn.disabled = true;
+      messageDiv.style.display = 'none';
+      messageDiv.classList.remove('show');
+
+      // Google Apps Scriptの関数呼び出し
+      google.script.run
+        .withSuccessHandler(function (response) {
+          submitBtn.classList.remove('loading');
+          submitBtn.disabled = false;
+
+          if (response.success) {
+            showMessage(`✨ 登録が完了しました！ <br><a href="${response.url}" target="_blank">Notionでページを開く →</a>`, 'success');
+            speciesInput.value = '';
+          } else {
+            showMessage(`エラーが発生しました: <br>${response.error}`, 'error');
+          }
+        })
+        .withFailureHandler(function (error) {
+          submitBtn.classList.remove('loading');
+          submitBtn.disabled = false;
+          showMessage(`通信エラーが発生しました: <br>${error}`, 'error');
+        })
+        .processJellyfish(speciesName);
+    }
+
+    function showMessage(text, type) {
+      const messageDiv = document.getElementById('message');
+      messageDiv.innerHTML = text;
+      messageDiv.className = type;
+      messageDiv.style.display = 'block';
+      // 強制リフロー
+      void messageDiv.offsetWidth;
+      messageDiv.classList.add('show');
+    }
+
+    // エンターキーでの送信対応
+    document.getElementById('species').addEventListener('keypress', function (e) {
+      if (e.key === 'Enter') {
+        submitForm();
+      }
+    });
+  </script>
+</body>
+
+</html>
